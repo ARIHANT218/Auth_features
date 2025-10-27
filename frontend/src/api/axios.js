@@ -1,24 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 
-// Normalize the API base URL (remove trailing slash if present)
-const rawBase = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-const API_BASE = rawBase.replace(/\/$/, ''); // ensures no trailing slash
 
-const instance = axios.create({
-  baseURL: `${API_BASE}/api`, // backend API (uses env var in production)
+const API_BASE_URL =
+  (import.meta.env.VITE_API_URL || process.env.REACT_APP_API_URL || "http://localhost:5000").replace(/\/$/, "");
+
+
+const api = axios.create({
+  baseURL: `${API_BASE_URL}/api`, 
   timeout: 10000,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
-  // withCredentials: true, // enable if you use cookies/sessions
 });
 
-// add Authorization header automatically when token exists
-instance.interceptors.request.use(
+// Attach token to every request (if exists)
+api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
-      config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
@@ -26,4 +25,4 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-export default instance;
+export default api;
