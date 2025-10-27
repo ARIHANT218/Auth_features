@@ -4,11 +4,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
-
+const app = express();
 app.use(cors({ origin: 'https://auth-features.vercel.app/' }));
 connectDB();
 
-const app = express();
+
 app.use(cors());
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
