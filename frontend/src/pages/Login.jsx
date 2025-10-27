@@ -11,13 +11,13 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // You can call your API here (using axios or api.js)
+  
     console.log("Logging in with:", { email, password });
   };
 
   return (
     <main className="auth-container" role="main">
-      {/* Left side - Login form */}
+    
       <div className="auth-content">
         <section className="auth-card" aria-labelledby="login-title">
           <h1 id="login-title" className="auth-title">
@@ -69,7 +69,7 @@ export default function Login() {
         </section>
       </div>
 
-      {/* Right side - Image */}
+  
       <div className="auth-banner-container">
         <div className="auth-banner">
           <img

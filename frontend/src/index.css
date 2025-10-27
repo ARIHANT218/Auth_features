@@ -1,7 +1,7 @@
-/* ---------- Variables ---------- */
+
 :root{
-  --primary-color: #6c63ff;        /* primary gradient start */
-  --secondary-color: #3b82f6;      /* primary gradient end */
+  --primary-color: #6c63ff;        
+  --secondary-color: #3b82f6;     
   --primary-dark: #4338ca;
   --primary-light: #818cf8;
   --background: #f8fafc;
@@ -19,11 +19,10 @@
   --spacing-xl: 2.5rem;
 }
 
-/* ---------- Font imports ---------- */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-/* ---------- Reset ---------- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
@@ -35,7 +34,6 @@ body {
   line-height: 1.5;
 }
 
-/* ---------- Layout ---------- */
 .auth-container {
   min-height: 100vh;
   display: grid;
@@ -46,7 +44,7 @@ body {
   align-items: center;
 }
 
-/* Left card */
+
 .auth-card {
   background: var(--background-light);
   padding: 2.5rem;
@@ -59,7 +57,7 @@ body {
   position: relative;
 }
 
-/* title / subtitle */
+
 .auth-title {
   font-size: 2rem;
   font-weight: 700;
@@ -72,7 +70,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* form (reusable) */
+
 .auth-form { display:flex; flex-direction:column; gap:1rem; }
 .auth-input {
   width: 100%;
@@ -86,6 +84,12 @@ body {
   z-index: 1;
 }
 
+.auth-input:hover {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.05);
+  transform: translateY(-1px);
+}
+
 .auth-input:focus {
   outline: none;
   border-color: var(--primary);
@@ -93,13 +97,31 @@ body {
   transform: translateY(-2px);
 }
 
+
+.auth-input:not(:placeholder-shown) {
+  border-color: var(--primary);
+  border-width: 2px;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.05);
+}
+
+.auth-input:not(:placeholder-shown):focus {
+  border-color: var(--primary-dark);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+}
+
 .auth-input::placeholder {
   transition: all 0.3s ease;
+  color: #94a3b8;
 }
 
 .auth-input:focus::placeholder {
   opacity: 0.7;
   transform: translateX(10px);
+}
+
+
+.auth-input:not(:placeholder-shown) {
+  background: linear-gradient(to right, #ffffff, #fafaff);
 }
 .auth-input:focus {
   outline:none;
@@ -128,16 +150,14 @@ body {
   border: 2px solid rgba(255,255,255,0.12);
 }
 .auth-link { display:block; margin-top: 0.75rem; color: var(--primary-color); text-decoration: none; }
-/* ========== Register Animations & helpers ========== */
 
-/* subtle lift when inputs are focused (visual) */
 .auth-input:focus {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(99,102,241,0.12);
   border-color: rgba(99,102,241,0.9);
 }
 
-/* loading state on button */
+
 .auth-button.loading {
   position: relative;
   pointer-events: none;
@@ -262,6 +282,46 @@ body {
 .auth-input-group {
   opacity: 0;
   animation: fadeInUp 0.5s ease-out forwards;
+  position: relative;
+  padding: 2px;
+  border-radius: 0.6rem;
+  transition: all 0.3s ease;
+}
+
+/* Hover effect for the entire input group */
+.auth-input-group:hover {
+  background: linear-gradient(to right, rgba(79, 70, 229, 0.1), rgba(129, 140, 248, 0.1));
+}
+
+/* Highlight line effect */
+.auth-input-group::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary), var(--primary-light));
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  opacity: 0;
+}
+
+/* Hover line effect */
+.auth-input-group:hover::after {
+  width: 50%;
+  opacity: 0.5;
+}
+
+.auth-input-group:focus-within::after {
+  width: 100%;
+  opacity: 1;
+}
+
+/* Active state highlight */
+.auth-input-group:has(.auth-input:not(:placeholder-shown))::after {
+  width: 100%;
+  opacity: 0.5;
 }
 
 .auth-input-group:nth-child(1) { animation-delay: 0.2s; }

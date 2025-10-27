@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <main className="auth-container home-layout" role="main">
-      {/* Left column: text content */}
+     
       <div className="auth-content">
         <section className="auth-card" aria-labelledby="home-title">
           <h1 id="home-title" className="auth-title">Welcome Back</h1>
@@ -45,7 +45,6 @@ export default function Home() {
         </section>
       </div>
 
-      {/* Right column: Image */}
       <div className="auth-banner-container">
         <img
           src={homeBanner}
