@@ -9,14 +9,18 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
+    try {
+      
+      const response = await axios.post('/users/register', { name, email, password });
 
-    try{
-        const response = await axios.post('/users/register', {name, email, password});
+      if (response.data?.token) {
         localStorage.setItem('token', response.data.token);
-        navigate('/login');
-    }
-    catch(error){
-        console.error("Registration failed", error);
+      }
+
+      navigate('/login');
+    } catch (error) {
+      console.error('Registration failed:', error.response?.data || error.message);
+      alert(error.response?.data?.message || 'Registration failed. Please try again.');
     }
   };
 
@@ -27,7 +31,7 @@ export default function Register() {
 
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Full Name"
           value={name}
           onChange={e => setName(e.target.value)}
           className="auth-input"
@@ -46,20 +50,15 @@ export default function Register() {
           onChange={e => setPassword(e.target.value)}
           className="auth-input"
         />
-        <button 
-          onClick={handleRegister} 
-          className="auth-button"
-        >
+
+        <button onClick={handleRegister} className="auth-button">
           Create Account
         </button>
-        
+
         <a href="/login" className="auth-link">
           Already have an account? Sign in
         </a>
       </div>
     </div>
   );
-
-  }
-
-
+}
