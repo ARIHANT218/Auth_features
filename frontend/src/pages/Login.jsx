@@ -58,9 +58,7 @@ export default function Login() {
           </form>
 
           <div className="auth-links">
-            <a href="/forgot" className="auth-link">
-              Forgot password?
-            </a>
+            
             <p style={{ marginTop: "12px" }}>
               Don't have an account?{" "}
               <a className="auth-link" href="/register">
