@@ -14,13 +14,13 @@ export default function Home() {
 
         <div className="home-buttons">
           <button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/Login")}
             className="auth-button"
           >
             Login
           </button>
           <button
-            onClick={() => navigate("/signup")}
+            onClick={() => navigate("/Register")}
             className="auth-button secondary"
           >
             Sign Up
