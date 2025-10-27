@@ -1,60 +1,97 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from '../api/axios';
+// src/pages/Login.jsx
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import loginBanner from "../assets/Img2.png";
+import "../styles/auth.css";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleLogin = async () => {
-    try {
-      // Send login request
-      const response = await axios.post('/users/login', { email, password });
-
-      // If backend sends token, store it
-      if (response.data?.token) {
-        localStorage.setItem('token', response.data.token);
-        console.log('Token stored:', response.data.token);
-        navigate('/');
-      } else {
-        alert('Login failed. No token received.');
-      }
-    } catch (error) {
-      console.error('Login failed:', error.response?.data || error.message);
-      alert(error.response?.data?.message || 'Invalid credentials. Please try again.');
-    }
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // You can call your API here (using axios or api.js)
+    console.log("Logging in with:", { email, password });
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <h1 className="auth-title">Welcome Back</h1>
+    <main className="auth-container" role="main">
+      {/* Left side - Login form */}
+      <div className="auth-content">
+        <section className="auth-card" aria-labelledby="login-title">
+          <h1 id="login-title" className="auth-title">
+            Welcome Back!
+          </h1>
+          <p className="auth-subtitle">Login to your account</p>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="auth-input"
-        />
+          <form onSubmit={handleLogin} noValidate>
+            <label className="auth-input-group" htmlFor="email">
+              <input
+                id="email"
+                className="auth-input"
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                aria-label="Email"
+              />
+            </label>
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="auth-input"
-        />
+            <label className="auth-input-group" htmlFor="password">
+              <input
+                id="password"
+                className="auth-input"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                aria-label="Password"
+              />
+            </label>
 
-        <button onClick={handleLogin} className="auth-button">
-          Sign In
-        </button>
+            <button className="auth-button" type="submit">
+              Log In
+            </button>
+          </form>
 
-        <a href="/register" className="auth-link">
-          Don't have an account? Sign up
-        </a>
+          <div className="auth-links">
+            <a href="/forgot" className="auth-link">
+              Forgot password?
+            </a>
+            <p style={{ marginTop: "12px" }}>
+              Don't have an account?{" "}
+              <a className="auth-link" href="/register">
+                Sign up
+              </a>
+            </p>
+          </div>
+        </section>
       </div>
-    </div>
+
+      {/* Right side - Image */}
+      <div className="auth-banner-container">
+        <div className="auth-banner">
+          <img
+            src={loginBanner}
+            alt="Login illustration"
+            style={{
+              maxWidth: "480px",
+              height: "auto",
+              borderRadius: "1rem",
+              boxShadow:
+                "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+              animation: "fadeIn 0.6s ease-out forwards",
+            }}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+              e.currentTarget.parentElement.classList.add("fallback");
+            }}
+          />
+        </div>
+      </div>
+    </main>
   );
 }

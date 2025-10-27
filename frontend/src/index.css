@@ -1,95 +1,466 @@
-/* Common Auth Styles */
+/* ---------- Variables ---------- */
+:root{
+  --primary-color: #6c63ff;        /* primary gradient start */
+  --secondary-color: #3b82f6;      /* primary gradient end */
+  --primary-dark: #4338ca;
+  --primary-light: #818cf8;
+  --background: #f8fafc;
+  --background-light: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+  --border-color: #e6e8f0;
+  --border-radius: 16px;
+  --shadow-lg: 0 8px 16px -4px rgba(0,0,0,0.08);
+  --shadow-md: 0 6px 15px rgba(108,99,255,0.15);
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 2.5rem;
+}
+
+/* ---------- Font imports ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* ---------- Reset ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  background: var(--background);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+/* ---------- Layout ---------- */
 .auth-container {
-  display: flex;
-  justify-content: center;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #007BFF, #6C63FF);
-  font-family: 'Poppins', sans-serif;
 }
 
+/* Left card */
 .auth-card {
-  background: #fff;
-  padding: 2.5rem 3rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  background: var(--background-light);
+  padding: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 400px;
+  max-width: 480px;
+  margin: 0 auto;
   text-align: center;
+  position: relative;
 }
 
+/* title / subtitle */
 .auth-title {
   font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #333;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
 }
-
 .auth-subtitle {
-  color: #555;
+  color: var(--text-secondary);
   font-size: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
+/* form (reusable) */
+.auth-form { display:flex; flex-direction:column; gap:1rem; }
 .auth-input {
-  display: block;
   width: 100%;
-  margin: 10px 0;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 0.85rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 0.5rem;
   font-size: 1rem;
-  transition: border 0.3s;
+  transition: all 0.3s ease;
+  background: white;
+  position: relative;
+  z-index: 1;
 }
 
 .auth-input:focus {
-  border-color: #6C63FF;
   outline: none;
-}
-
-.auth-button {
-  display: inline-block;
-  width: 100%;
-  background-color: #6C63FF;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 0;
-  margin-top: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.auth-button:hover {
-  background-color: #5848e2;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
   transform: translateY(-2px);
 }
 
-.auth-button.secondary {
-  background-color: #007BFF;
+.auth-input::placeholder {
+  transition: all 0.3s ease;
 }
 
-.auth-button.secondary:hover {
-  background-color: #0065d1;
+.auth-input:focus::placeholder {
+  opacity: 0.7;
+  transform: translateX(10px);
+}
+.auth-input:focus {
+  outline:none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(108,99,255,0.08);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+.auth-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.6rem;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  transition: all .2s ease;
+}
+.auth-button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.auth-button.secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid rgba(255,255,255,0.12);
+}
+.auth-link { display:block; margin-top: 0.75rem; color: var(--primary-color); text-decoration: none; }
+/* ========== Register Animations & helpers ========== */
+
+/* subtle lift when inputs are focused (visual) */
+.auth-input:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.9);
+}
+
+/* loading state on button */
+.auth-button.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.95;
+}
+.auth-button.loading::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* small show/hide password button style */
+.show-pass-btn { font-size: 0.85rem; background: transparent; border: none; padding: 6px; }
+
+/* error message style */
+.error-message {
+  color: var(--error, #ef4444);
+  background: rgba(239,68,68,0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  border: 1px solid rgba(239,68,68,0.12);
+}
+
+/* center content on register success */
+.auth-card svg { display: block; margin: 0 auto; }
+
+/* micro hover for auth-card */
+.auth-card:hover { transform: translateY(-4px); transition: transform .25s ease; }
+
+/* accessible reduced-motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .auth-card, .auth-input, .auth-button, svg, path { transition: none !important; animation: none !important; }
+}
+
+/* hero styles */
+.hero-section { margin-top: 1.5rem; text-align:center; }
+.hero-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  background: linear-gradient(to right, var(--primary-dark), var(--primary-light), var(--primary-dark));
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: textShine 3s linear infinite;
+}
+.hero-subtitle { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 1.05rem; }
+
+/* text animations */
+@keyframes textShine { to { background-position: 200% center; } }
+@keyframes floatText {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+.hero-subtitle { animation: floatText 3s ease-in-out infinite; }
+
+/* ---------- Banner / Illustration (right column) ---------- */
+/* Auth Page Animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Apply animations to auth components */
+.auth-content {
+  animation: slideIn 0.6s ease-out;
+}
+
+.auth-card {
+  animation: scaleIn 0.6s ease-out;
+}
+
+.auth-title {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.auth-subtitle {
+  animation: fadeInUp 0.6s ease-out;
+  animation-delay: 0.1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.auth-input-group {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.auth-input-group:nth-child(1) { animation-delay: 0.2s; }
+.auth-input-group:nth-child(2) { animation-delay: 0.3s; }
+.auth-input-group:nth-child(3) { animation-delay: 0.4s; }
+
+.auth-button {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+  animation-delay: 0.5s;
 }
 
 .auth-link {
-  display: block;
-  margin-top: 15px;
-  font-size: 0.95rem;
-  color: #6C63FF;
-  text-decoration: none;
+  opacity: 0;
+  animation: fadeInUp 0.5s ease-out forwards;
+  animation-delay: 0.6s;
 }
 
-.auth-link:hover {
-  text-decoration: underline;
-}
-
-/* Home-specific */
-.home-buttons {
+/* Banner Styles */
+.auth-banner-container {
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 2rem;
+  background: transparent;
+  margin: 1rem;
+  animation: slideIn 0.6s ease-out;
+  animation-delay: 0.3s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.auth-banner-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  animation: fadeIn 0.6s ease-out forwards;
+  object-fit: contain;
+}
+
+/* fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .auth-container { grid-template-columns: 1fr; padding: 1.25rem; }
+  .auth-banner-container { display:none; } /* hide image on small screens */
+  .hero-title { font-size: 1.75rem; }
+}
+
+
+/* ---------- Image Animations ---------- */
+
+/* Floating animation (gentle up & down) */
+@keyframes floatImage {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* Glow / shine effect */
+@keyframes imageGlow {
+  0%, 100% {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  }
+  50% {
+    box-shadow: 0 10px 25px rgba(108,99,255,0.35);
+  }
+}
+
+/* Add subtle rotation for modern effect */
+@keyframes gentleTilt {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+/* Apply combined animation to the banner image */
+.auth-banner-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: contain;
+  animation:
+    fadeIn 0.8s ease-out forwards,
+    floatImage 6s ease-in-out infinite,
+    imageGlow 5s ease-in-out infinite;
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for interactive shine */
+.auth-banner-image:hover {
+  transform: scale(1.03) rotate(1deg);
+  box-shadow: 0 15px 30px rgba(108,99,255,0.4);
+}
+/* Animated background gradient */
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Add behind the right side (banner) */
+.auth-banner-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,0.4), rgba(59,130,246,0.4), rgba(147,51,234,0.3));
+  background-size: 200% 200%;
+  filter: blur(60px);
+  z-index: 0;
+  animation: moveGradient 10s ease-in-out infinite;
+  opacity: 0.5;
+}
+/* Animated background gradient */
+@keyframes moveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Add behind the right side (banner) */
+.auth-banner-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(108,99,255,0.4), rgba(59,130,246,0.4), rgba(147,51,234,0.3));
+  background-size: 200% 200%;
+  filter: blur(60px);
+  z-index: 0;
+  animation: moveGradient 10s ease-in-out infinite;
+  opacity: 0.5;
+}
+
+@keyframes cardEntrance {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.auth-card {
+  animation: cardEntrance 0.8s ease-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(108,99,255,0.25);
+}
+.auth-container::before,
+.auth-container::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  background: radial-gradient(circle, var(--secondary-color), transparent);
+  animation: floatOrb 8s ease-in-out infinite;
+}
+
+.auth-container::before {
+  width: 150px;
+  height: 150px;
+  top: 10%;
+  left: 5%;
+  animation-delay: 0s;
+}
+.auth-container::after {
+  width: 200px;
+  height: 200px;
+  bottom: 15%;
+  right: 10%;
+  animation-delay: 3s;
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.05); }
 }
