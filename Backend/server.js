@@ -5,7 +5,7 @@ dotenv.config();
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 
-
+app.use(cors({ origin: 'https://auth-features.vercel.app/' }));
 connectDB();
 
 const app = express();
